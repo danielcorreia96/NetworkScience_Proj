@@ -57,13 +57,46 @@ def get_degreee_metrics(graph):
 	deg_hist = nx.degree_histogram(graph)
 	all_degrees = nx.degree(graph)
 	degree_values = list(map(lambda x: x[1], all_degrees))
-	print("Average: ", sum(degree_values)/len(degree_values))
-	print("Minimum: ", min(degree_values))
-	print("Maximum: ", max(degree_values))
-	print("Most frequent: ", deg_hist.index(max(deg_hist)), "(", max(deg_hist), "times) \n")
+	print("Average degree: ", sum(degree_values)/len(degree_values))
+	print("Minimum degree: ", min(degree_values))
+	print("Maximum degree: ", max(degree_values))
+	if nx.is_directed(graph):
+		all_degrees = graph.in_degree()
+		degree_values = list(map(lambda x: x[1], all_degrees))
+		print("Average in-degree: ", sum(degree_values)/len(degree_values))
+		print("Minimum in-degree: ", min(degree_values))
+		print("Maximum in-degree: ", max(degree_values))
+		all_degrees = graph.out_degree()
+		degree_values = list(map(lambda x: x[1], all_degrees))
+		print("Average out-degree: ", sum(degree_values)/len(degree_values))
+		print("Minimum out-degree: ", min(degree_values))
+		print("Maximum out-degree: ", max(degree_values))
 
 
+def get_clustering_metrics(graph):
+	print("\n===== Clustering Metrics ======")
+	
+	triangles_values = list(nx.triangles(graph).values())
+	print("# triangles: ", sum(triangles_values))
+	print("Average triangles: ", sum(triangles_values)/len(triangles_values))
+	print("Minimum # triangles: ", min(triangles_values))
+	print("Maximum # triangles: ", max(triangles_values))
+	print("Transitivity: ", nx.transitivity(graph))
+	print("")
+	
+	clustercoff_values = list(nx.clustering(graph).values())
+	print("Average clustering coefficient: ", sum(clustercoff_values)/len(clustercoff_values))
+	print("Minimum clustering coefficient: ", min(clustercoff_values))
+	print("Maximum clustering coefficient: ", max(clustercoff_values))
+	print("")
 
+	clustercoff_values = list(nx.square_clustering(graph).values())
+	print("Average square clustering coefficient: ", sum(clustercoff_values)/len(clustercoff_values))
+	print("Minimum square clustering coefficient: ", min(clustercoff_values))
+	print("Maximum square clustering coefficient: ", max(clustercoff_values))
+	print("")
+
+	
 
 
 if __name__ == '__main__':
