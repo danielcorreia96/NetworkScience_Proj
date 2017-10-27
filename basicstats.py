@@ -2,22 +2,28 @@
 
 import networkx as nx
 import os
+import json
 
-DATAFOLDER = "datasets/"
 
-def read_datasets_gml():
-	datasets = dict()
-	for filename in os.listdir(DATAFOLDER):
-		try:
-			data = nx.read_gml(DATAFOLDER+filename)
-			data.name = filename[:-4]
-			datasets[data.name] = data
-			print(nx.info(data))
-			print("--------------------------")
-		except Exception as err:
-			print(err)
-			print("failed to load dataset " + filename +  " in gml format")
-	return datasets
+def try_to_read_gml(filename):
+	try:
+		data = nx.read_gml(filename)
+		data.name = filename.split("/")[1][:-4]
+		print(nx.info(data))
+		print("--------------------------")
+		return data
+	except Exception as err:
+		print(err)
+		print("failed to load dataset " + filename +  " in gml format")
+
+def try_to_read_json(filename):
+	try:
+		with open(filename) as json_file:
+			dataset = nx.node_link_graph(json.load(json_file))
+			return dataset
+	except Exception as err:
+		print(err)
+		print("failed to load dataset " + filename +  " in gml format")		
 
 def get_main_graph_attrs(graph):
 	print("\n====== Total elements ======")
@@ -54,58 +60,75 @@ def get_is_of_type_attrs(graph):
 
 def get_degreee_metrics(graph):
 	print("\n====== Degree Metrics ======")
-	deg_hist = nx.degree_histogram(graph)
-	all_degrees = nx.degree(graph)
-	degree_values = list(map(lambda x: x[1], all_degrees))
+	degree_values = list(map(lambda x: x[1], nx.degree(graph)))
 	print("Average degree: ", sum(degree_values)/len(degree_values))
 	print("Minimum degree: ", min(degree_values))
 	print("Maximum degree: ", max(degree_values))
+	get_top_n_by_metric(nx.degree(graph),"degree")
+	
 	if nx.is_directed(graph):
-		all_degrees = graph.in_degree()
-		degree_values = list(map(lambda x: x[1], all_degrees))
-		print("Average in-degree: ", sum(degree_values)/len(degree_values))
-		print("Minimum in-degree: ", min(degree_values))
-		print("Maximum in-degree: ", max(degree_values))
-		all_degrees = graph.out_degree()
-		degree_values = list(map(lambda x: x[1], all_degrees))
-		print("Average out-degree: ", sum(degree_values)/len(degree_values))
-		print("Minimum out-degree: ", min(degree_values))
-		print("Maximum out-degree: ", max(degree_values))
+		in_degree_vals = list(map(lambda x: x[1], graph.in_degree()))
+		print("Average in-degree: ", sum(in_degree_vals)/len(in_degree_vals))
+		print("Minimum in-degree: ", min(in_degree_vals))
+		print("Maximum in-degree: ", max(in_degree_vals))
+		get_top_n_by_metric(graph.out_degree(),"in-degree")
+
+		out_degree_vals = list(map(lambda x: x[1], graph.out_degree()))
+		print("Average out-degree: ", sum(out_degree_vals)/len(out_degree_vals))
+		print("Minimum out-degree: ", min(out_degree_vals))
+		print("Maximum out-degree: ", max(out_degree_vals))
+		get_top_n_by_metric(graph.in_degree(),"in-degree")
 
 
 def get_clustering_metrics(graph):
 	print("\n===== Clustering Metrics ======")
-	
-	triangles_values = list(nx.triangles(graph).values())
-	print("# triangles: ", sum(triangles_values))
-	print("Average triangles: ", sum(triangles_values)/len(triangles_values))
-	print("Minimum # triangles: ", min(triangles_values))
-	print("Maximum # triangles: ", max(triangles_values))
 	print("Transitivity: ", nx.transitivity(graph))
 	print("")
 	
-	clustercoff_values = list(nx.clustering(graph).values())
-	print("Average clustering coefficient: ", sum(clustercoff_values)/len(clustercoff_values))
-	print("Minimum clustering coefficient: ", min(clustercoff_values))
-	print("Maximum clustering coefficient: ", max(clustercoff_values))
-	print("")
+	if not nx.is_directed(graph):
+		triangles_values = list(nx.triangles(graph).values())
+		print("# triangles: ", sum(triangles_values))
+		print("Average triangles: ", sum(triangles_values)/len(triangles_values))
+		print("Minimum # triangles: ", min(triangles_values))
+		print("Maximum # triangles: ", max(triangles_values))
+		get_top_n_by_metric(nx.triangles(graph),"# of triangles")
+		
+		clustercoff_values = list(nx.clustering(graph).values())
+		print("Average clustering coefficient: ", sum(clustercoff_values)/len(clustercoff_values))
+		print("Minimum clustering coefficient: ", min(clustercoff_values))
+		print("Maximum clustering coefficient: ", max(clustercoff_values))
+		get_top_n_by_metric(nx.clustering(graph),"clustering coefficient")
+		print("")
 
-	clustercoff_values = list(nx.square_clustering(graph).values())
-	print("Average square clustering coefficient: ", sum(clustercoff_values)/len(clustercoff_values))
-	print("Minimum square clustering coefficient: ", min(clustercoff_values))
-	print("Maximum square clustering coefficient: ", max(clustercoff_values))
-	print("")
+		clustercoff_values = list(nx.square_clustering(graph).values())
+		print("Average square clustering coefficient: ", sum(clustercoff_values)/len(clustercoff_values))
+		print("Minimum square clustering coefficient: ", min(clustercoff_values))
+		print("Maximum square clustering coefficient: ", max(clustercoff_values))
+		get_top_n_by_metric(nx.square_clustering(graph), "square clustering coefficient")
+		print("")
 
 	
 
+def get_top_n_by_metric(metric_data, metric_name, n=10):
+	print("Top", n, "by", metric_name)
+	metric_dict = dict(metric_data)
+	for i in range(1,n+1):
+		top_node = max(metric_dict, key=metric_dict.get)
+		print(i,": ", top_node, " (", metric_dict.pop(top_node),")",sep="")
+	print("")
 
-if __name__ == '__main__':
-	# load all the data into a dictionary
-	all_data = read_datasets_gml()
 
-	# pick a dataset and get some basic stats
-	graph = all_data["lesmiserables"]
+def get_all_info(graph):
+	print("******************************************")
 	print("\nGraph: ", graph.name)
 	get_main_graph_attrs(graph)
 	get_is_of_type_attrs(graph)
 	get_degreee_metrics(graph)
+	get_clustering_metrics(graph)
+	print("******************************************")
+
+if __name__ == '__main__':
+	# pick a dataset and get some basic stats
+	# graph = try_to_read_gml("datasets/word_adjacencies.gml")
+	graph = try_to_read_json("datasets/miserables.json")
+	get_all_info(graph)
