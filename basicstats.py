@@ -127,8 +127,10 @@ def get_all_info(graph):
 	get_clustering_metrics(graph)
 	print("******************************************")
 
+
+
 if __name__ == '__main__':
 	# pick a dataset and get some basic stats
-	# graph = try_to_read_gml("datasets/word_adjacencies.gml")
-	graph = try_to_read_json("datasets/miserables.json")
+	graph = try_to_read_gml("datasets/word_adjacencies.gml")
+	# graph = try_to_read_json("datasets/miserables.json")
 	get_all_info(graph)
