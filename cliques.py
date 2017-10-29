@@ -17,6 +17,7 @@ def cliques_graph(graph):
 	print("Description of cliques in graph " + graph_name[9:-4])
 	print("Number of Cliques: " + str(len(list(nx.algorithms.clique.enumerate_all_cliques(graph)))))
 	print("Number of Maximals cliques: "+ str(nx.algorithms.clique.graph_number_of_cliques(graph)))
+	print("The size of the largest clique in the graph: ", str(nx.algorithms.clique.graph_clique_number(graph)))
 
 def cliques_node(graph, node):
 	print("Description of cliques in graph " + graph_name[9:-4] + " node: "+ node)
@@ -33,7 +34,7 @@ def description_for_every_node_in_graph(graph):
 def number_of_cliques_for_node(graph, node):
 	return str(len(nx.algorithms.clique.cliques_containing_node(graph, node)))
 
-def size_maximal_clique(graph):
+def maximal_clique(graph):
 	return nx.algorithms.clique.make_max_clique_graph(graph)
 
 def draw_circle_around_clique(clique,coords):
@@ -53,15 +54,15 @@ def draw_circle_around_clique(clique,coords):
 	plt.axis('scaled')
 	
 
-def draw_colored_clique_with_size_N(graph, size, circle=False):
-	coords=nx.spring_layout(graph)
+def draw_colored_clique_with_size_N(graph, size=2, layout="spring", circle=False):
+	coords=layout_dealer(graph, layout)
 
 	cliques=[clique for clique in nx.find_cliques(graph) if len(clique)>size]
-
-	#draw the graph
+	plt.figure()
 	nx.draw(graph, pos=coords, with_labels=graph.nodes().values())
+	print("Number of Cliques: " + str(len(cliques)))
 	for clique in cliques:
-		print("Clique to appear: ",clique)
+		print("Clique to appear: ",clique, " length: ", str(len(clique)))
 		if circle is True:
 			draw_circle_around_clique(clique, coords)
 		nx.draw_networkx_nodes(graph,pos=coords,nodelist=clique,node_color=next(colors))
@@ -69,6 +70,79 @@ def draw_colored_clique_with_size_N(graph, size, circle=False):
 	plt.show()
 
 
+def draw_colored_maximal_clique(graph, size=2, layout="spring", circle=False):
+	graph = maximal_clique(graph)
+	draw_colored_clique_with_size_N(graph, size, layout, circle)
+
+
+def draw_clique_bipartite(graph, size=2, layout="spring", circle=False):
+	graph = nx.algorithms.clique.make_clique_bipartite(graph)
+	draw_colored_clique_with_size_N(graph, size, layout, circle)
+
+def draw_top_size_cliques(graph, top=10, layout="spring"):
+	print("Showing the top "+ str(top) + " for sizes")
+	top_n_size_cliques = []
+	all_cliques = list(nx.algorithms.clique.enumerate_all_cliques(graph))
+	cliques = []
+	for i in range(len(all_cliques)):
+		k = sorted(all_cliques[i], key=lambda j:j)
+		if k not in cliques:
+			cliques.append(k) 
+	
+	# print(cliques)
+	s = []
+	for i in cliques:
+		s.append((i,len(i)))
+
+	s = sorted(s , key=lambda i: i[1])
+	s.reverse()
+	max_size = int(s[0][1])
+	print("Max Size: ", str(max_size))
+	clique_for_size= dict()
+	for i in range(1, max_size+1):
+		clique_for_size[i]=[]
+	for i in s:
+		clique_for_size[i[1]] += i[0]	
+
+	if top > max_size:
+		top = max_size
+	a = []
+	for i in range(max_size, max_size-top, -1):
+		a += clique_for_size[i]
+	
+	for n in graph:
+		if n in a and n not in top_n_size_cliques :
+			top_n_size_cliques.append(n)
+	graph = graph.subgraph(top_n_size_cliques)
+
+
+	coords=layout_dealer(graph, layout)
+
+	cliques=[clique for clique in nx.find_cliques(graph) if len(clique) >= max_size-top]
+
+	print("Number of Cliques: " + str(len(cliques)))
+	
+	for clique in cliques:
+		if len(clique) > max_size-top:
+			plt.figure()
+			nx.draw(graph, pos=coords, with_labels=graph.nodes().values())
+			print("Clique to appear: ",clique, " length: ", str(len(clique)))
+			nx.draw_networkx_nodes(graph, pos=coords, nodelist=clique,node_color=next(colors))		
+			plt.show()
+
+
+
+def layout_dealer(graph, layout):
+	if layout == "spring":
+		return	nx.spring_layout(graph)
+	elif layout == "circular":
+		return	nx.circular_layout(graph)
+	elif layout == "spectral":
+		return	nx.spectral_layout(graph)
+	elif layout == "shell":
+		return	nx.shell_layout(graph)
+	elif layout == "random":
+		return	nx.random_layout(graph)
 
 if __name__ == '__main__':
 	
@@ -87,8 +161,9 @@ if __name__ == '__main__':
 	
 	cliques_graph(G)
 	
-	draw_colored_clique_with_size_N(size_maximal_clique(G), 2, False)
-	draw_colored_clique_with_size_N(G, 2)
+	# draw_colored_maximal_clique(G, 2)
+	# draw_colored_clique_with_size_N(nx.algorithms.clique.make_clique_bipartite(G), 1)
+	# draw_colored_clique_with_size_N(G, 2)
 	# description_for_every_node_in_graph(G)
-
+	draw_top_size_cliques(G, 3)
 	
