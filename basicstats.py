@@ -2,9 +2,9 @@
 
 import networkx as nx
 import matplotlib.pyplot as plt
-import os
 import json
 import itertools as it
+import argparse
 
 global colors, hatches
 colors=it.cycle('mykwbgc')
@@ -167,7 +167,22 @@ def draw_all_metrics(graph, n=10):
 	print("******************************************")
 
 if __name__ == '__main__':
-	# pick a dataset and get some basic stats
-	graph = try_to_read_gml("datasets/word_adjacencies.gml")
-	# graph = try_to_read_json("datasets/miserables.json")
-	print_all_info(graph)
+	parser = argparse.ArgumentParser()
+	parser.add_argument("dataset",help="dataset to be processed")
+	parser.add_argument("format", help="format of the dataset (only supports gml and json)")
+	parser.add_argument("-a","--all", help="print all possible metrics available",action="store_true")
+	parser.add_argument("-d","--draw", type=int, help="draw graphs by top n of metrics")
+	args = parser.parse_args()
+	graph = None
+
+	if args.format == "gml":
+		graph = try_to_read_gml(args.dataset)
+	elif args.format == "json":
+		graph = try_to_read_json(args.dataset)
+
+
+	if args.all:
+		print_all_info(graph)
+	print(args.draw)
+	if args.draw:
+		draw_all_metrics(graph,args.draw)
