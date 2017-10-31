@@ -15,8 +15,6 @@ def try_to_read_gml(filename):
 	try:
 		data = nx.read_gml(filename)
 		data.name = filename.split("/")[1][:-4]
-		print(nx.info(data))
-		print("--------------------------")
 		return data
 	except Exception as err:
 		print(err)
@@ -26,10 +24,11 @@ def try_to_read_json(filename):
 	try:
 		with open(filename) as json_file:
 			dataset = nx.node_link_graph(json.load(json_file))
+			dataset.name = filename.split("/")[1][:-5]
 			return dataset
 	except Exception as err:
 		print(err)
-		print("failed to load dataset " + filename +  " in gml format")		
+		print("failed to load dataset " + filename +  " in json format")		
 
 def print_main_graph_attrs(graph):
 	print("\n====== Total elements ======")
@@ -55,8 +54,9 @@ def print_is_of_type_attrs(graph):
 	else:
 		print("Connected? ->", "Yes" if nx.is_connected(graph) else "No")		
 		print("Bi-connected? ->", "Yes" if nx.is_biconnected(graph) else "No")
-		print("Chordal? -> ", "Yes" if nx.is_chordal(graph) else "No")
-		print("Forest? -> ", "Yes" if nx.is_chordal(graph) else "No")
+		if not graph.is_multigraph():
+			print("Chordal? -> ", "Yes" if nx.is_chordal(graph) else "No")
+			print("Forest? -> ", "Yes" if nx.is_chordal(graph) else "No")
 
 	print("Distance regular? -> ", "Yes" if nx.is_distance_regular(graph) else "No")
 	print("Eulerian? -> ", "Yes" if nx.is_eulerian(graph) else "No")
@@ -88,30 +88,34 @@ def print_degreee_metrics(graph):
 
 def print_clustering_metrics(graph):
 	print("\n===== Clustering Metrics ======")
-	print("Transitivity: ", nx.transitivity(graph))
-	print("")
+	if not g.is_multigraph():
+		print("Transitivity: ", nx.transitivity(graph))
+		print("")
 	
-	if not nx.is_directed(graph):
-		triangles_values = list(nx.triangles(graph).values())
-		print("# triangles: ", sum(triangles_values))
-		print("Average triangles: ", sum(triangles_values)/len(triangles_values))
-		print("Minimum # triangles: ", min(triangles_values))
-		print("Maximum # triangles: ", max(triangles_values))
-		print_top_n_by_metric(nx.triangles(graph),"# of triangles")
-		
-		clustercoff_values = list(nx.clustering(graph).values())
-		print("Average clustering coefficient: ", sum(clustercoff_values)/len(clustercoff_values))
-		print("Minimum clustering coefficient: ", min(clustercoff_values))
-		print("Maximum clustering coefficient: ", max(clustercoff_values))
-		print_top_n_by_metric(nx.clustering(graph),"clustering coefficient")
-		print("")
+		if not nx.is_directed(graph):
+			triangles_values = list(nx.triangles(graph).values())
+			print("# triangles: ", sum(triangles_values))
+			print("Average triangles: ", sum(triangles_values)/len(triangles_values))
+			print("Minimum # triangles: ", min(triangles_values))
+			print("Maximum # triangles: ", max(triangles_values))
+			print_top_n_by_metric(nx.triangles(graph),"# of triangles")
+			
+			clustercoff_values = list(nx.clustering(graph).values())
+			print("Average clustering coefficient: ", sum(clustercoff_values)/len(clustercoff_values))
+			print("Minimum clustering coefficient: ", min(clustercoff_values))
+			print("Maximum clustering coefficient: ", max(clustercoff_values))
+			print_top_n_by_metric(nx.clustering(graph),"clustering coefficient")
+			print("")
 
-		clustercoff_values = list(nx.square_clustering(graph).values())
-		print("Average square clustering coefficient: ", sum(clustercoff_values)/len(clustercoff_values))
-		print("Minimum square clustering coefficient: ", min(clustercoff_values))
-		print("Maximum square clustering coefficient: ", max(clustercoff_values))
-		print_top_n_by_metric(nx.square_clustering(graph), "square clustering coefficient")
-		print("")
+			clustercoff_values = list(nx.square_clustering(graph).values())
+			print("Average square clustering coefficient: ", sum(clustercoff_values)/len(clustercoff_values))
+			print("Minimum square clustering coefficient: ", min(clustercoff_values))
+			print("Maximum square clustering coefficient: ", max(clustercoff_values))
+			print_top_n_by_metric(nx.square_clustering(graph), "square clustering coefficient")
+			print("")
+	else:
+		print("Multigraph clustering metrics are not supported by Networkx")
+
 
 	
 

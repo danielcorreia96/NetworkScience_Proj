@@ -10,19 +10,21 @@ graph_name = ""
 
 def assortativity(graph):
     print("\n------------------------------------")
-    print("Assortativity coefficient r: " + str(get_assortativity_coefficient(G)))
+    print("Assortativity coefficient r: " + str(get_assortativity_coefficient(graph)))
     print("------------------------------------\n")
-    all_or_top(G)
-    get_mixing(G)
+    all_or_top(graph)
+    get_mixing(graph)
 
-def assortativity_node(graph, node):
-    a = nx.average_neighbor_degree(graph)
-    print_all(a, "Average neighbor degree", node)
+# def assortativity_node(graph, node):
+#     a = nx.average_neighbor_degree(graph)
+#     #print_all(a, "Average neighbor degree", node)
 
 def description_for_every_node_in_graph(graph):
-	for node in graph.nodes():
-		print("\n---------------- "+ node + "'s' Assortativity -----------------")
-		assortativity_node(graph, node)
+    metrics_dict = nx.average_neighbor_degree(graph)
+    for node in graph.nodes():
+        print(node,": ", str(metrics_dict[node]), sep="") 
+        #print("\n---------------- "+ node + "'s' Assortativity -----------------")
+		#assortativity_node(graph, node)
 
 def all_or_top(graph, n=0):
     if n == 0:
@@ -66,7 +68,7 @@ def degree_mixing(graph, probability):
                 print("Count: " + str(v))
 
 def atribute_mixing(graph, probability):
-    d = nx.attribute_mixing_dict(G, attribute,  normalized=probability)
+    d = nx.attribute_mixing_dict(graph, attribute,  normalized=probability)
     od = collections.OrderedDict(sorted(d.items()))
     for key, value in d.items():
         print("------------------------------------")
