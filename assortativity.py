@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-import sys
 import basicstats as bs
+import argparse
 import networkx as nx
 import collections
 
@@ -86,15 +86,24 @@ def print_all(metric_dict, metric_name, node):
     print(metric_name + ": " + str(metric_dict[node]))
 
 if __name__ == '__main__':
-	
-	if len(sys.argv) != 2:
-		print('USAGE: '+sys.argv[0]+' input.gml <model')
-		exit(0)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("dataset",help="dataset to be processed")
+    parser.add_argument("format", choices=["gml","json"], help="format of the dataset (only supports gml and json)")
+    parser.add_argument("-a","--all", help="print all possible metrics available",action="store_true")
+    parser.add_argument("-t","--top",type=int, help="print top n by metrics available")
+    args = parser.parse_args()
 
-	# pick a dataset and get some basic stats
+    graph = None
 
-	graph_name = sys.argv[1]
-	G = bs.try_to_read_gml(graph_name)
-	# bs.get_all_info(graph)
-	
-	assortativity(G)
+    if args.format == "gml":
+        graph = try_to_read_gml(args.dataset)
+    elif args.format == "json":
+        graph = try_to_read_json(args.dataset)
+
+    if args.all:
+        assortativity(graph)
+
+    if args.top:
+        all_or_top(graph,args.top)
+
+

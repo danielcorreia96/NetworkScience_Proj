@@ -3,6 +3,8 @@
 import sys
 import basicstats as bs
 import networkx as nx
+import argparse
+
 from math import *
 import matplotlib.pylab as plt
 import itertools as it
@@ -178,16 +180,20 @@ def layout_dealer(graph, layout):
 		return	nx.random_layout(graph)
 
 if __name__ == '__main__':
-	
-	if len(sys.argv) != 2:
-		print('USAGE: '+sys.argv[0]+' input.gml <model')
-		exit(0)
+	parser = argparse.ArgumentParser()
+	parser.add_argument("dataset",help="dataset to be processed")
+	parser.add_argument("format", choices=["gml","json"], help="format of the dataset (only supports gml and json)")
+	args = parser.parse_args()
 
-	graph_name = sys.argv[1]
-	G = bs.try_to_read_gml(graph_name)
-	
-	
-	# cliques_graph(G)
+	graph = None
+
+	if args.format == "gml":
+		graph = try_to_read_gml(args.dataset)
+	elif args.format == "json":
+		graph = try_to_read_json(args.dataset)
+
+	cliques_graph(graph)
+
 	# draw_colored_maximal_clique(G, 2)
 	# draw_colored_clique_with_size_N(G, 2)
 	# description_for_every_node_in_graph(G)
