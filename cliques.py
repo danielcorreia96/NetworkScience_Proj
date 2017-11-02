@@ -14,7 +14,7 @@ colors=it.cycle('mykwbgc')
 hatches=it.cycle('/\|-+*')
 
 def cliques_graph(graph):
-	if not nx.is_directed(graph):
+	if nx.is_directed(graph):
 		print("Err, only graph undirected")
 		return
 	print("Description of cliques in graph " + graph_name[9:-4])
@@ -23,7 +23,7 @@ def cliques_graph(graph):
 	print("The size of the largest clique in the graph: ", str(nx.algorithms.clique.graph_clique_number(graph)))
 
 def cliques_node(graph, node):
-	if not nx.is_directed(graph):
+	if nx.is_directed(graph):
 		print("Err, only graph undirected")
 		return
 	print("Description of cliques in graph " + graph_name[9:-4] + " node: "+ node)
@@ -32,7 +32,7 @@ def cliques_node(graph, node):
 	print("Size of Largest maximal clique containing node " + str(len(nx.algorithms.clique.node_clique_number(graph))))
 
 def description_for_every_node_in_graph(graph):
-	if not nx.is_directed(graph):
+	if nx.is_directed(graph):
 		print("Err, only graph undirected")
 		return
 	for node in graph.nodes():
@@ -41,21 +41,18 @@ def description_for_every_node_in_graph(graph):
 
 
 def number_of_cliques_for_node(graph, node):
-	if not nx.is_directed(graph):
+	if nx.is_directed(graph):
 		print("Err, only graph undirected")
 		return
 	return str(len(nx.algorithms.clique.cliques_containing_node(graph, node)))
 
 def maximal_clique(graph):
-	if not nx.is_directed(graph):
+	if nx.is_directed(graph):
 		print("Err, only graph undirected")
 		return
 	return nx.algorithms.clique.make_max_clique_graph(graph)
 
-def draw_circle_around_clique(clique,coords):
-	if not nx.is_directed(graph):
-		print("Err, only graph undirected")
-		return
+def draw_circle_around_clique(clique,coords, color):
 	dist=0
 	temp_dist=0
 	center=[0 for i in range(2)]
@@ -72,42 +69,43 @@ def draw_circle_around_clique(clique,coords):
 	plt.axis('scaled')
 	
 
-def draw_colored_clique_with_size_N(graph, size=2, layout="spring", circle=False):
-	if not nx.is_directed(graph):
+def draw_colored_clique_with_size_N(graph, size=2, circle=False, layout="spring"):
+	if nx.is_directed(graph):
 		print("Err, only graph undirected")
 		return
-	coords=layout_dealer(graph, layout)
 
+	coords=layout_dealer(graph, layout)
+	
 	cliques=[clique for clique in nx.find_cliques(graph) if len(clique)>size]
 	plt.figure()
 	nx.draw(graph, pos=coords, with_labels=graph.nodes().values())
 	print("Number of Cliques: " + str(len(cliques)))
 	for clique in cliques:
 		print("Clique to appear: ",clique, " length: ", str(len(clique)))
+		color = next(colors)
 		if circle is True:
-			draw_circle_around_clique(clique, coords)
-		nx.draw_networkx_nodes(graph,pos=coords,nodelist=clique,node_color=next(colors))
-
+			draw_circle_around_clique(clique, coords, color)
+		nx.draw_networkx_nodes(graph,pos=coords,nodelist=clique,node_color=color)
 	plt.show()
 
 
-def draw_colored_maximal_clique(graph, size=2, layout="spring", circle=False):
-	if not nx.is_directed(graph):
+def draw_colored_maximal_clique(graph, size=2, circle=False, layout="spring"):
+	if nx.is_directed(graph):
 		print("Err, only graph undirected")
 		return
 	graph = maximal_clique(graph)
-	draw_colored_clique_with_size_N(graph, size, layout, circle)
+	draw_colored_clique_with_size_N(graph, size, circle, layout)
 
 
-def draw_clique_bipartite(graph, size=2, layout="spring", circle=False):
-	if not nx.is_directed(graph):
+def draw_clique_bipartite(graph, size=2, layout="spring"):
+	if nx.is_directed(graph):
 		print("Err, only graph undirected")
 		return
 	graph = nx.algorithms.clique.make_clique_bipartite(graph)
-	draw_colored_clique_with_size_N(graph, size, layout, circle)
+	draw_colored_clique_with_size_N(graph, size, layout)
 
 def draw_top_size_cliques(graph, top=10, layout="spring"):
-	if not nx.is_directed(graph):
+	if nx.is_directed(graph):
 		print("Err, only graph undirected")
 		return
 	print("Showing the top "+ str(top) + " for sizes")
@@ -118,8 +116,7 @@ def draw_top_size_cliques(graph, top=10, layout="spring"):
 		k = sorted(all_cliques[i], key=lambda j:j)
 		if k not in cliques:
 			cliques.append(k) 
-	
-	# print(cliques)
+
 	s = []
 	for i in cliques:
 		s.append((i,len(i)))
@@ -163,7 +160,7 @@ def draw_top_size_cliques(graph, top=10, layout="spring"):
 
 
 def layout_dealer(graph, layout):
-	if not nx.is_directed(graph):
+	if nx.is_directed(graph):
 		print("Err, only graph undirected")
 		return
 	if layout == "spring":
@@ -185,11 +182,15 @@ if __name__ == '__main__':
 
 	graph_name = sys.argv[1]
 	G = bs.try_to_read_gml(graph_name)
-	
+	if nx.is_directed(G):
+		print("Err, only graph undirected")
+		exit(0)	
 	
 	# cliques_graph(G)
-	# draw_colored_maximal_clique(G, 2)
-	# draw_colored_clique_with_size_N(G, 2)
 	# description_for_every_node_in_graph(G)
-	# draw_top_size_cliques(G, 3)
+	# draw_colored_clique_with_size_N(G, 2, False, "circular")
+	# draw_colored_clique_with_size_N(G, 2, True)
+	# draw_colored_maximal_clique(G, 2)
+	# draw_clique_bipartite(G)
+	draw_top_size_cliques(G, 2)
 	
