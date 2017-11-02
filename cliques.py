@@ -194,7 +194,7 @@ if __name__ == '__main__':
 	# cliques_graph(G)
 	# description_for_every_node_in_graph(G)
 	# draw_colored_maximal_clique(G, 2)
-	draw_colored_clique_with_size_N(G, 2)
+	# draw_colored_clique_with_size_N(G, 2)
 	# draw_colored_clique_with_size_N(G, 2, False, "circular")
 	# draw_colored_clique_with_size_N(G, 2, True)
 	# draw_colored_maximal_clique(G, 2)
