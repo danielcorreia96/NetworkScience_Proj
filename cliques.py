@@ -3,6 +3,8 @@
 import sys
 import basicstats as bs
 import networkx as nx
+import argparse
+
 from math import *
 import matplotlib.pylab as plt
 import itertools as it
@@ -108,7 +110,7 @@ def draw_top_size_cliques(graph, top=10, layout="spring"):
 	if nx.is_directed(graph):
 		print("Err, only graph undirected")
 		return
-	print("Showing the top "+ str(top) + " for sizes")
+	print("Showing the top "+ str(top) + " for size")
 	top_n_size_cliques = []
 	all_cliques = list(nx.algorithms.clique.enumerate_all_cliques(graph))
 	cliques = []
@@ -175,22 +177,27 @@ def layout_dealer(graph, layout):
 		return	nx.random_layout(graph)
 
 if __name__ == '__main__':
-	
-	if len(sys.argv) != 2:
-		print('USAGE: '+sys.argv[0]+' input.gml <model')
-		exit(0)
+	parser = argparse.ArgumentParser()
+	parser.add_argument("dataset",help="dataset to be processed")
+	parser.add_argument("format", choices=["gml","json"], help="format of the dataset (only supports gml and json)")
+	args = parser.parse_args()
 
-	graph_name = sys.argv[1]
-	G = bs.try_to_read_gml(graph_name)
+	if args.format == "gml":
+		G = bs.try_to_read_gml(args.dataset)
+	elif args.format == "json":
+		G = bs.try_to_read_json(args.dataset)
+
 	if nx.is_directed(G):
 		print("Err, only graph undirected")
 		exit(0)	
 	
 	# cliques_graph(G)
 	# description_for_every_node_in_graph(G)
+	# draw_colored_maximal_clique(G, 2)
+	draw_colored_clique_with_size_N(G, 2)
 	# draw_colored_clique_with_size_N(G, 2, False, "circular")
 	# draw_colored_clique_with_size_N(G, 2, True)
 	# draw_colored_maximal_clique(G, 2)
 	# draw_clique_bipartite(G)
-	draw_top_size_cliques(G, 2)
+	# draw_top_size_cliques(G, 2)
 	
