@@ -1,0 +1,18 @@
+1. jogos de bem publico -> 51
+	refs: 62
+
+2. prisoners-dilema em tipos diferentes de grafos -> 38
+	refs: 9, 47, 48, 49, 
+
+3. prisoners-dilema+epidemia combo -> (auto-proposto)
+	
+
+4. reputação (amazon?) -> 41
+	refs: 52
+
+5. dados do twitter -> 56
+	refs: perguntar ao stor alexandre mais detalhes
+
+6. cooperação em redes politicas
+	refs: 51
+
