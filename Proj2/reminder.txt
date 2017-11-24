@@ -1,0 +1,1 @@
+for f in *.gz; do python -m cProfile parse_tweet.py "$f"; done
