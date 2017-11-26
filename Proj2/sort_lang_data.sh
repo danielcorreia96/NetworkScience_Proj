@@ -1,3 +1,4 @@
+#!/bin/bash
 echo "Sorting retweets in each file by created_at timestamp attribute..."
 for f in *_data/*;
 do

@@ -1,3 +1,8 @@
 .DS_Store
 __pycache__
 *.gz
+Proj2/en_data/
+Proj2/es_data/
+Proj2/parsed_data.zip
+Proj2/parsed_data/
+Proj2/pt_data/
