@@ -36,8 +36,8 @@ def do_work(in_queue, langs, stop_token):
 def start_multiprocessing():
 	work = JoinableQueue()
 	STOP_TOKEN = "STOP!"
-	for file in os.listdir("parsed_data"):
-		work.put(os.path.join("parsed_data",file))
+	for file in os.listdir("data_by_month/"):
+		work.put(os.path.join("data_by_month/",file))
 	# start for workers
 
 	procs = []

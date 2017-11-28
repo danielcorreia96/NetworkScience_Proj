@@ -22,9 +22,3 @@ unzip parsed_data.zip
 rm -r parsed_data
 
 mv full_parsed parsed_data
-
-echo "Splitting files by language"
-mkdir en_data
-mkdir es_data
-mkdir pt_data
-python split_by_language.py
