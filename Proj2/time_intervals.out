@@ -1,0 +1,134 @@
+en_data/en_full_data_Mar.out - interval between retweet time and original tweet time
+mean,      2 days 10:03:32.625006
+std,      31 days 19:10:32.436006
+min,              0 days 00:00:00
+25%,              0 days 00:02:23
+50%,              0 days 00:10:46
+75%,              0 days 01:13:08
+max,           1792 days 20:58:14
+
+en_data/en_full_data_Apr.out - interval between retweet time and original tweet time
+mean,      2 days 08:49:14.053493
+std,      33 days 09:03:07.557818
+min,              0 days 00:00:00
+25%,              0 days 00:02:31
+50%,              0 days 00:12:30
+75%,              0 days 01:25:24
+max,           1924 days 03:27:02
+
+en_data/en_full_data_May.out - interval between retweet time and original tweet time
+mean,      2 days 19:54:15.654461
+std,      42 days 18:43:18.845148
+min,              0 days 00:00:00
+25%,              0 days 00:03:15
+50%,              0 days 00:16:56
+75%,              0 days 01:56:16
+max,           1866 days 23:51:20
+
+es_data/es_full_data_Mar.out - interval between retweet time and original tweet time
+mean,      2 days 04:25:55.396554
+std,      25 days 07:20:26.141549
+min,              0 days 00:00:00
+25%,              0 days 00:02:53
+50%,              0 days 00:13:25
+75%,              0 days 01:35:16
+max,           1718 days 12:12:32
+
+es_data/es_full_data_Apr.out - interval between retweet time and original tweet time
+mean,      2 days 06:52:48.573718
+std,      28 days 06:24:31.842848
+min,              0 days 00:00:00
+25%,              0 days 00:02:44
+50%,              0 days 00:12:07
+75%,              0 days 01:10:18
+max,           1663 days 05:43:34
+
+es_data/es_full_data_May.out - interval between retweet time and original tweet time
+mean,      2 days 07:20:35.242686
+std,      27 days 13:29:19.079480
+min,              0 days 00:00:00
+25%,              0 days 00:03:16
+50%,              0 days 00:15:44
+75%,              0 days 01:47:38
+max,           1667 days 02:52:48
+
+es_data/es_full_data_Jul.out - interval between retweet time and original tweet time
+mean,      0 days 20:20:27.507411
+std,      16 days 18:17:05.429171
+min,              0 days 00:00:00
+25%,              0 days 00:04:14
+50%,              0 days 00:20:46
+75%,              0 days 02:05:51
+max,           1493 days 16:03:51
+
+pt_data/pt_full_data_Mar.out - interval between retweet time and original tweet time
+mean,      5 days 20:22:39.675344
+std,      63 days 05:48:17.768660
+min,              0 days 00:00:01
+25%,              0 days 00:02:09
+50%,              0 days 00:08:48
+75%,              0 days 00:58:00
+max,           1712 days 22:29:00
+
+pt_data/pt_full_data_Apr.out - interval between retweet time and original tweet time
+mean,      3 days 19:17:11.080802
+std,      49 days 18:29:10.995486
+min,              0 days 00:00:00
+25%,              0 days 00:03:15
+50%,              0 days 00:17:34
+75%,              0 days 01:58:45
+max,           1560 days 09:26:32
+
+es_data/es_full_data_Jun.out - interval between retweet time and original tweet time
+mean,      0 days 22:59:09.888045
+std,      19 days 11:24:40.192833
+min,              0 days 00:00:00
+25%,              0 days 00:02:44
+50%,              0 days 00:11:32
+75%,              0 days 01:09:18
+max,           1606 days 02:19:01
+
+pt_data/pt_full_data_May.out - interval between retweet time and original tweet time
+mean,      4 days 03:56:25.415167
+std,      48 days 01:25:52.118954
+min,              0 days 00:00:00
+25%,              0 days 00:02:56
+50%,              0 days 00:15:41
+75%,       0 days 02:03:10.500000
+max,           1758 days 16:02:41
+
+en_data/en_full_data_Jul.out - interval between retweet time and original tweet time
+mean,      0 days 21:41:19.538611
+std,      17 days 05:09:16.426905
+min,              0 days 00:00:00
+25%,              0 days 00:04:40
+50%,              0 days 00:25:31
+75%,              0 days 02:46:22
+max,           1814 days 03:42:15
+
+pt_data/pt_full_data_Jul.out - interval between retweet time and original tweet time
+mean,      1 days 06:34:25.535442
+std,      25 days 19:03:26.340740
+min,              0 days 00:00:00
+25%,              0 days 00:03:36
+50%,              0 days 00:17:01
+75%,              0 days 01:44:34
+max,           1731 days 22:19:38
+
+pt_data/pt_full_data_Jun.out - interval between retweet time and original tweet time
+mean,      1 days 12:32:46.848060
+std,      30 days 22:15:17.145325
+min,              0 days 00:00:00
+25%,              0 days 00:02:15
+50%,              0 days 00:09:54
+75%,              0 days 01:12:43
+max,           1750 days 21:20:21
+
+en_data/en_full_data_Jun.out - interval between retweet time and original tweet time
+mean,      0 days 22:33:02.652517
+std,      23 days 09:55:19.577259
+min,              0 days 00:00:00
+25%,              0 days 00:03:14
+50%,              0 days 00:14:38
+75%,              0 days 01:35:05
+max,           1884 days 13:25:40
