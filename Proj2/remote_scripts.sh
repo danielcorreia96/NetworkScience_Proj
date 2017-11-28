@@ -15,10 +15,10 @@ ssh redes@mem.inesc-id.pt "cd twitter; mv full_data* full_parsed/; rm full_parse
 # chmod a-w parsed_data/*
 
 echo "Downloading only new files"
-scp redes@mem.inesc-id.pt:twitter/full_parsed.zip parsed_data.zip
+scp redes@mem.inesc-id.pt:twitter/full_parsed.zip data_parsed.zip
 
-unzip parsed_data.zip
+unzip data_parsed.zip
 
-rm -r parsed_data
+rm -r data_parsed
 
-mv full_parsed parsed_data
+mv full_parsed data_parsed

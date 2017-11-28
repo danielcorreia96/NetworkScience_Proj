@@ -2,8 +2,11 @@
 __pycache__
 *.gz
 Proj2/en_data/
+Proj2/en_users-daily
+Proj2/es_users-daily
+Proj2/pt_users-daily
 Proj2/es_data/
-Proj2/parsed_data.zip
-Proj2/parsed_data/
+Proj2/data_parsed.zip
+Proj2/data_parsed/
 Proj2/pt_data/
 Proj2/data_by_month/

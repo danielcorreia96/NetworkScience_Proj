@@ -12,4 +12,4 @@ python3 split_by_language.py
 
 echo "Sorting by date"
 sh sort_lang_data.sh
-sh put_header.sh
+sh freq_user.sh
