@@ -2,16 +2,22 @@ import pandas as pd
 import sys
 
 def count_tweets(doc):
-	low_memory=False
 
-	data = pd.read_csv(doc)
+	data = pd.read_csv(doc, low_memory=False)
 	
+	data['freq-u'] = data.groupby('user_id_str')['user_id_str'].transform('count')	
+	data = data[data["freq-u"]>=30]
+
+	data = data.drop('freq-u', 1)
+
 	data["day"] = format_datetime(data["created_at"])
 
 	data['freq'] = data.groupby('user_id_str')['day'].transform('count')
 	
 	data = data[data["freq"]>=30]
 	
+	data = data.drop('freq', 1)	
+
 	data.to_csv(doc[:2]+"_users-daily/"+doc[8:-4]+"_dayly-users.out")
 
 def format_datetime(dt_series):
