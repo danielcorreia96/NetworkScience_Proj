@@ -12,12 +12,12 @@ def count_tweets(doc):
 
 	data["day"] = format_datetime(data["created_at"])
 
-	data['freq'] = data.groupby('user_id_str')['day'].transform('count')
+	data['freq'] = data.groupby('user_id_str')['day'].nunique()
 	
 	data = data[data["freq"]>=30]
 	
-	data = data.drop('freq', 1)	
-
+	data = data.drop('freq', 1)
+	data.groupby('user_id_str')
 	data.to_csv(doc[:2]+"_users-daily/"+doc[8:-4]+"_dayly-users.out")
 
 def format_datetime(dt_series):
