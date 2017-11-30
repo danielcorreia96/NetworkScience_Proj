@@ -10,6 +10,5 @@ echo "Splitting files by language"
 #mkdir pt_data
 python split_by_language.py
 
-#echo "Sorting by date"
-#sh sort_lang_data.sh
-# sh freq_user.sh
+sh freq_user.sh
+# sh sort_lang_data.sh

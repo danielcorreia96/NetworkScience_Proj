@@ -1,24 +1,23 @@
 import pandas as pd
 import sys
 
-def count_tweets(doc):
+def count_tweets(doc, num):
 
 	data = pd.read_csv(doc, low_memory=False)
 	
 	data['freq-u'] = data.groupby('user_id_str')['user_id_str'].transform('count')	
-	data = data[data["freq-u"]>=30]
-
-	data = data.drop('freq-u', 1)
-
+	data = data[data["freq-u"]>=num]
 	data["day"] = format_datetime(data["created_at"])
+	data = data.drop('freq-u', 1)
+	data = data.drop("id_str",1)
+	data = data.drop("created_at",1) 
+	data = data.drop("lang",1)
+	data = data.drop("hashtags",1)
+	data = data.drop("retweeted_id_str",1)
+	data = data.drop("retweeted_user_id_str",1)
+	data = data.drop("retweeted_created_at",1)
+	data.to_csv(doc[:2]+"_mt"+str(num)+"tweets/"+doc[8:], index=False)
 
-	data['freq'] = data.groupby('user_id_str')['day'].transform('count')
-	
-	data = data[data["freq"]>=30]
-	
-	data = data.drop('freq', 1)	
-
-	data.to_csv(doc[:2]+"_users-daily/"+doc[8:-4]+"_dayly-users.out")
 
 def format_datetime(dt_series):
 
@@ -33,4 +32,8 @@ def format_datetime(dt_series):
 
 
 if __name__ == '__main__':
-	count_tweets(sys.argv[1])	
+	f = sys.argv[1]
+	count_tweets(f, 25)
+	count_tweets(f, 50)
+	count_tweets(f, 100)
+
