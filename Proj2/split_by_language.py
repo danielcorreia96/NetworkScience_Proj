@@ -41,7 +41,7 @@ def start_multiprocessing():
 	# start for workers
 
 	procs = []
-	langs = ["en","es","pt"]
+	langs = ["pt","es","en"]
 	for _ in range(cpu_count()-1):
 		t = Process(target=do_work, args=(work, langs, STOP_TOKEN))
 		t.daemon = True
