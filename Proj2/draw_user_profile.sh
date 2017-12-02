@@ -1,7 +1,7 @@
 chmod 600 *_mt*/*
 rm graphs_tweetsperuser/*
 mkdir graphs_tweetsperuser
-
+rm *_mt*/*-count
 for f in *_mt*/*;
 do
 	echo "$f"
