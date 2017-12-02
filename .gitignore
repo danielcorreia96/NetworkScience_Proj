@@ -10,3 +10,13 @@ Proj2/data_parsed.zip
 Proj2/data_parsed/
 Proj2/pt_data/
 Proj2/data_by_month/
+en_mt25tweets 
+pt_mt25tweets 
+es_mt25tweets 
+en_mt50tweets 
+pt_mt50tweets 
+es_mt50tweets 
+en_mt100tweets 
+pt_mt100tweets 
+es_mt100tweets
+*.out
