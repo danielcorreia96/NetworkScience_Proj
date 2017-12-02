@@ -26,7 +26,7 @@ def graphics_users_tweets(file):
 	# plt.show()
 	# plt.draw()
 
-	plt.savefig("graphs_tweetspermonth/"+file[17:-4]+".png")
+	plt.savefig("graphs_tweetspermonth/"+file[17:19]+"_"+file[-7:-4]+".png")
 	plt.close()
 
 if __name__ == '__main__':

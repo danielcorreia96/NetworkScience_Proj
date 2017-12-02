@@ -16,7 +16,7 @@ def count_tweets(doc, num):
 	data = data.drop("retweeted_id_str",1)
 	data = data.drop("retweeted_user_id_str",1)
 	data = data.drop("retweeted_created_at",1)
-	data.to_csv(doc[:2]+"_mt"+str(num)+"tweets/"+doc[8:], index=False)
+	data.to_csv(doc[:2]+"_mt"+str(num).zfill(3)+"tweets/"+doc[8:], index=False)
 
 
 def format_datetime(dt_series):
@@ -33,7 +33,7 @@ def format_datetime(dt_series):
 
 if __name__ == '__main__':
 	f = sys.argv[1]
-	count_tweets(f, 25)
+	count_tweets(f, 75)
 	count_tweets(f, 50)
-	count_tweets(f, 100)
+	count_tweets(f, 150)
 

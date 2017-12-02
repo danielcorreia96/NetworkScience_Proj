@@ -1,13 +1,13 @@
-rm -r en_mt25tweets pt_mt25tweets es_mt25tweets en_mt50tweets pt_mt50tweets es_mt50tweets en_mt100tweets pt_mt100tweets es_mt100tweets
-mkdir en_mt50tweets
-mkdir es_mt50tweets
-mkdir pt_mt50tweets
-mkdir en_mt25tweets
-mkdir es_mt25tweets
-mkdir pt_mt25tweets
-mkdir en_mt100tweets
-mkdir es_mt100tweets
-mkdir pt_mt100tweets
+rm -r *_mt*/*
+mkdir en_mt050tweets
+mkdir es_mt050tweets
+mkdir pt_mt050tweets
+mkdir en_mt075tweets
+mkdir es_mt075tweets
+mkdir pt_mt075tweets
+mkdir en_mt150tweets
+mkdir es_mt150tweets
+mkdir pt_mt150tweets
 chmod 600 *_data/*
 for f in *_data/*;
 do
