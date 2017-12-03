@@ -208,7 +208,6 @@ def hashtag_per_user(f1,out,mes):
 
 	del dict_graphic_list[0]
 	sorted_day_hashtags = sorted(dict_graphic_list.items(), key=lambda x: x[0])
-	print(sorted_day_hashtags)
 	key1 = (sorted_day_hashtags[0][0].split("#"))[1]
 	graphic_list = []
 	for el in sorted_day_hashtags:
