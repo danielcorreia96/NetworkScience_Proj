@@ -19,7 +19,7 @@ def graphics_users_tweets(file):
 
 	ax1.set_title("Lang: "+string.upper(file[17:19])+" Month:"+file[-7:-4])
 	ax1.set_xlabel("Day")
-	ax1.set_ylabel("#tweets", rotation=360)
+	ax1.set_ylabel("#retweets", rotation=360)
 
 	ax1.plot(x, y, c="r")
 	ax1.yaxis.set_label_coords(-0.075,1.030)

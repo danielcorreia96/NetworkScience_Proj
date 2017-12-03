@@ -49,9 +49,9 @@ def graphics_user_profiling(file):
 		ax1 = fig.add_subplot(111)
 
 
-		ax1.set_title(string.upper(file[0:2])+" Users with more than: "+str(int(file[5:8]))+" tweets - "+file[-13:-10])
+		ax1.set_title(string.upper(file[0:2])+" Users with more than: "+str(int(file[5:8]))+" retweets - "+file[-13:-10])
 		ax1.set_xlabel("Day")
-		ax1.set_ylabel("#tweets", rotation=360)
+		ax1.set_ylabel("#retweets", rotation=360)
 		
 
 		ax1.plot(ux[0], uy[0], c="r")
@@ -64,7 +64,7 @@ def graphics_user_profiling(file):
 		# plt.show()
 		# plt.draw()
 
-		plt.savefig("graphs_tweetsperuser/"+file[15:17]+"_"+str(int(file[5:8]))+"-tweets_"+file[-13:-10]+".png")
+		plt.savefig("graphs_tweetsperuser/"+file[15:17]+"_"+str(int(file[5:8]))+"-retweets_"+file[-13:-10]+".png")
 		plt.close()
 
 if __name__ == '__main__':
