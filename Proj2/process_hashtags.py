@@ -3,7 +3,7 @@ import sys
 import operator
 import re
 import matplotlib.pyplot as plt
-from igraph import *
+# from igraph import *
 import numpy as np
 
 
