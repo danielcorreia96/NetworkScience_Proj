@@ -1,0 +1,28 @@
+In-degree power law fitting
+Fitted power-law distribution on discrete data
+
+Exponent (alpha)  = 1.303472
+Cutoff (xmin)     = 7.000000
+
+Log-likelihood    = -338.292562
+
+H0: data was drawn from the fitted distribution
+
+KS test statistic = 0.053071
+p-value           = 0.999490
+
+H0 could not be rejected at significance level 0.05
+Out-degree power law fitting
+Fitted power-law distribution on discrete data
+
+Exponent (alpha)  = 2.000000
+Cutoff (xmin)     = 1.000000
+
+Log-likelihood    = -1627.778571
+
+H0: data was drawn from the fitted distribution
+
+KS test statistic = 0.111307
+p-value           = 0.000000
+
+H0 rejected at significance level 0.05
