@@ -160,7 +160,7 @@ def graphics_day_hashtags(day_hashtag_list, hashtag, out, mes):
 	plt.savefig(str(first_out) + "/"+ str(mes) + "/"+ str(second_out)+ "_" +str(hashtag[1:-1])+".png")
 	plt.close()
 
-def hashtag_per_user(f1,out,mes):
+def hashtag_per_user(f1,out,mes, hashtag):
 	first_line = True
 	hashtags_users_dict = {}
 	user_day = []
@@ -179,32 +179,31 @@ def hashtag_per_user(f1,out,mes):
 			hour = int(time.split(":")[0])
 			key = (day - 1)* 24 + hour 
 			hashtags = "#" + str(l[4]) +"#"
-			for el in best_hashtags:
-				res_search = re.search(str(el), hashtags)
-				if res_search != None:
-					if key < 10 :
-						chave = str(el)+"00"+str(key)
-					elif key < 100:
-						chave = str(el)+"0"+str(key)
+			res_search = re.search(str(hashtag), hashtags)
+			if res_search != None:
+				if key < 10 :
+					chave = str(hashtag)+"00"+str(key)
+				elif key < 100:
+					chave = str(hashtag)+"0"+str(key)
+				else:
+						chave = str(hashtag) + str(key) 
+				if chave != key_day:
+					if key_day not in dict_hours:
+						unicos = 0
 					else:
-							chave = str(el) + str(key) 
-					if chave != key_day:
-						if key_day not in dict_hours:
-							unicos = 0
-						else:
-							unicos = count_unicos(hashtags_users_dict,dict_hours[key_day])
-						dict_graphic_list[key_day] = unicos
-						key_day = chave
-					utilizador = str(el) + str(user)
-					if chave in dict_hours:
-						#dict_list = dict_hours[key]
-						dict_hours[chave].append(utilizador)
-					else:
-						dict_hours[chave] = [utilizador]
-					if utilizador in hashtags_users_dict:
-						hashtags_users_dict[utilizador] = hashtags_users_dict[utilizador] + 1
-					else:
-						hashtags_users_dict[utilizador] = 1
+						unicos = count_unicos(hashtags_users_dict,dict_hours[key_day])
+					dict_graphic_list[key_day] = unicos
+					key_day = chave
+				utilizador = str(hashtag) + str(user)
+				if chave in dict_hours:
+					#dict_list = dict_hours[key]
+					dict_hours[chave].append(utilizador)
+				else:
+					dict_hours[chave] = [utilizador]
+				if utilizador in hashtags_users_dict:
+					hashtags_users_dict[utilizador] = hashtags_users_dict[utilizador] + 1
+				else:
+					hashtags_users_dict[utilizador] = 1
 
 	del dict_graphic_list[0]
 	sorted_day_hashtags = sorted(dict_graphic_list.items(), key=lambda x: x[0])
@@ -261,17 +260,25 @@ def count_fast(f1):
 				fast_dict[user] = 1
 	print(len(fast_dict))
 
+def sort_by_date():
+	data = pd.read_csv('date.csv', sep='\t', header=None)
+	#data[4] = pd.to_datetime(data[4])
+	data.sort(2)
+
+
 if __name__ == '__main__':
 	f1 = open(sys.argv[1] , 'r')
 	count_hashtags_per_tweet(f1)
 	f1.close()
+	#best_hashtags = ["#WorldCup#"]
 	if int(sys.argv[3]) == 1:
 		f1 = open(sys.argv[1] , 'r')
 		mes = ((sys.argv[1].split("/"))[2].split("_"))[3].split(".")[0]
 		day_hashtag(f1, sys.argv[2], mes)
 		f1.close()
 	elif int(sys.argv[3]) == 2:
-		f1 = open(sys.argv[1] , 'r')
-		mes = ((sys.argv[1].split("/"))[2].split("_"))[3].split(".")[0]
-		hashtag_per_user(f1, sys.argv[2], mes)
-		f1.close()
+		for el in best_hashtags:
+			f1 = open(sys.argv[1] , 'r')
+			mes = ((sys.argv[1].split("/"))[2].split("_"))[3].split(".")[0]
+			hashtag_per_user(f1, sys.argv[2], mes, el)
+			f1.close()
